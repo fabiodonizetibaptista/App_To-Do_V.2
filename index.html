@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TO DO - Gerenciador Inteligente</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Botão Global de Alternância de Tema (Dark/Light) -->
+    <button id="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+
+    <div class="app-container">
+        
+        <!-- TELA 1: AUTENTICAÇÃO (Login / Cadastro) -->
+        <section id="auth-screen" class="screen active">
+            <div class="auth-card">
+                <div class="logo-container">
+                    <img src="logo.svg" alt="Logotipo TO DO" class="app-logo">
+                    <h1>TO DO</h1>
+                    <p>Organize sua rotina com simplicidade.</p>
+                </div>
+
+                <!-- Formulário de Login -->
+                <form id="login-form" class="auth-form">
+                    <div class="input-group">
+                        <label for="login-email">E-mail</label>
+                        <input type="email" id="login-email" placeholder="ex: eu@eu.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="login-password">Senha</label>
+                        <input type="password" id="login-password" placeholder="Sua senha" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                    <p class="form-switch-text">Não tem uma conta? <a href="#" id="to-register">Cadastre-se</a></p>
+                </form>
+
+                <!-- Formulário de Cadastro (Oculto por padrão) -->
+                <form id="register-form" class="auth-form hidden">
+                    <div class="input-group">
+                        <label for="reg-name">Nome</label>
+                        <input type="text" id="reg-name" placeholder="Seu nome" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-email">E-mail</label>
+                        <input type="email" id="reg-email" placeholder="seu@email.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="reg-password">Senha</label>
+                        <input type="password" id="reg-password" placeholder="Crie uma senha" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cadastrar</button>
+                    <p class="form-switch-text">Já tem uma conta? <a href="#" id="to-login">Entrar</a></p>
+                </form>
+
+                <div class="test-credentials">
+                    <small>💡 <strong>Acesso de Teste:</strong> eu@eu.com / 1234</small>
+                </div>
+            </div>
+        </section>
+
+        <!-- TELA 2: GERENCIAMENTO DE LISTAS -->
+        <section id="lists-screen" class="screen">
+            <header class="main-header">
+                <div class="header-user">
+                    <img src="logo.svg" alt="Logo" class="header-logo">
+                    <h2>Minhas Listas</h2>
+                </div>
+                <button id="logout-btn" class="btn-icon" title="Sair"><i class="fa-solid fa-right-from-bracket"></i></button>
+            </header>
+
+            <div class="action-bar">
+                <button id="open-new-list-modal" class="btn btn-primary">
+                    <i class="fa-solid fa-plus"></i> Nova Lista
+                </button>
+            </div>
+
+            <div id="lists-container" class="lists-grid">
+                <!-- Listas injetadas via JavaScript -->
+            </div>
+        </section>
+
+        <!-- TELA 3: VISUALIZAÇÃO E EDIÇÃO DE LISTA -->
+        <section id="tasks-screen" class="screen">
+            <header class="main-header">
+                <button id="back-to-lists" class="btn-icon" title="Voltar"><i class="fa-solid fa-arrow-left"></i></button>
+                <h2 id="current-list-title">Nome da Lista</h2>
+                <div class="placeholder-icon"></div>
+            </header>
+
+            <div class="task-input-container">
+                <form id="add-task-form">
+                    <input type="text" id="new-task-input" placeholder="Adicionar nova tarefa..." required>
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-plus"></i></button>
+                </form>
+            </div>
+
+            <div class="tasks-progress">
+                <span id="task-counter">0 de 0 concluídas</span>
+                <div class="progress-bar-bg"><div id="progress-bar-fill" class="progress-bar-fill"></div></div>
+            </div>
+
+            <ul id="tasks-container" class="tasks-list">
+                <!-- Tarefas injetadas via JavaScript -->
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- Modal de Criação de Nova Lista -->
+    <div id="new-list-modal" class="modal">
+        <div class="modal-content">
+            <h3>Criar Nova Lista</h3>
+            <form id="create-list-form">
+                <div class="input-group">
+                    <label for="list-name-input">Nome da Lista</label>
+                    <input type="text" id="list-name-input" placeholder="Ex: Mercado, Estudos..." required>
+                </div>
+                <div class="input-group">
+                    <label>Escolha um Ícone</label>
+                    <div class="icon-selector">
+                        <label><input type="radio" name="list-icon" value="fa-cart-shopping" checked><i class="fa-solid fa-cart-shopping"></i></label>
+                        <label><input type="radio" name="list-icon" value="fa-pills"><i class="fa-solid fa-pills"></i></label>
+                        <label><input type="radio" name="list-icon" value="fa-graduation-cap"><i class="fa-solid fa-graduation-cap"></i></label>
+                        <label><input type="radio" name="list-icon" value="fa-briefcase"><i class="fa-solid fa-briefcase"></i></label>
+                        <label><input type="radio" name="list-icon" value="fa-heart-pulse"><i class="fa-solid fa-heart-pulse"></i></label>
+                        <label><input type="radio" name="list-icon" value="fa-house"><i class="fa-solid fa-house"></i></label>
+                        <label><input type="radio" name="list-icon" value="fa-list-check"><i class="fa-solid fa-list-check"></i></label>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" id="close-modal-btn" class="btn btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Criar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
